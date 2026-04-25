@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Silent Emergency Alert App</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚨 Silent Emergency Alert App</h1>
+    <input type="text" id="username" placeholder="Enter your name"><br><br>
+
+    <button onclick="sendAlert()">PANIC</button>
+
+    <p id="output"></p>
+
+    <script>
+        function sendAlert() {
+            let user = document.getElementById("username").value;
+
+            if (user === "") {
+                alert("Enter your name!");
+                return;
+            }
+
+            // Get location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+
+                    let lat = position.coords.latitude;
+                    let lon = position.coords.longitude;
+
+                    let message = "🚨 ALERT SENT!\nUser: " + user +
+                                  "\nLocation: https://maps.google.com/?q=" + lat + "," + lon;
+
+                    // Display output
+                    document.getElementById("output").innerHTML =
+                        "<b>Alert Sent Successfully!</b><br>" +
+                        "User: " + user + "<br>" +
+                        "Location: <a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'>View Location</a>";
+
+                    alert(message);
+
+                });
+            } else {
+                alert("Geolocation not supported!");
+            }
+        }
+    </script>
+
+</body>
+</html>
